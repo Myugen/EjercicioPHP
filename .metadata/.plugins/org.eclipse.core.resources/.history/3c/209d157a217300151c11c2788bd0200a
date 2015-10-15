@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+	<?php
+	if(isset($_GET["numeroCeldas"])) {
+		$numeroCeldas = $_GET["numeroCeldas"];
+		echo "<form action='ejercicio2.php' method='get'>";
+		for($i = 0; $i < $numeroCeldas; $i++) {
+			echo "$i <input type='text' name='vector[]' /> <br>";
+		}
+	}
+	?>
+</body>
+</html>
+

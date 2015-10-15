@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+org.eclipse.php.debug.core.pathMapper=<pathMappers><item2><server>phphost</server><mapper></mapper></item2><item1><server>Default PHP Web Server</server><mapper></mapper></item1></pathMappers>
+org.eclipse.php.debug.core.xdebugDebuggerSettingsProvider=<settings><proxyEnable>false</proxyEnable><clientPort>9000</clientPort><ownerId>php-server-fe116b29-4dc4-4c23-975c-349cc95c4e4e</ownerId><proxyIdeKey></proxyIdeKey><proxyAddress></proxyAddress></settings>\u0005<settings><proxyEnable>false</proxyEnable><clientPort>9000</clientPort><ownerId>php-exe-4337d522-8098-4225-9c14-baeeac7625a0</ownerId><proxyIdeKey></proxyIdeKey><proxyAddress></proxyAddress></settings>\u0005<settings><proxyEnable>false</proxyEnable><clientPort>9000</clientPort><ownerId>php-server-836fcd6f-8591-4b10-bb5a-aa2dbd0ef9c6</ownerId><proxyIdeKey></proxyIdeKey><proxyAddress></proxyAddress></settings>
+org.eclipse.php.debug.core.zendDebuggerSettingsProvider=<settings><clientIp>192.168.21.28,127.0.0.1</clientIp><clientPort>10137</clientPort><ownerId>php-server-fe116b29-4dc4-4c23-975c-349cc95c4e4e</ownerId><responseTimeout>60000</responseTimeout></settings>\u0005<settings><clientPort>10137</clientPort><ownerId>php-exe-4337d522-8098-4225-9c14-baeeac7625a0</ownerId></settings>\u0005<settings><clientIp>192.168.21.28,127.0.0.1</clientIp><clientPort>10137</clientPort><ownerId>php-server-836fcd6f-8591-4b10-bb5a-aa2dbd0ef9c6</ownerId><responseTimeout>60000</responseTimeout></settings>
+org.eclipse.php.debug.coredefaultPHP=PHPXDebug
+org.eclipse.php.debug.coreinstalledPHPDebuggers=org.eclipse.php.debug.core.xdebugDebugger
+org.eclipse.php.debug.coreinstalledPHPInis=/Applications/MAMP/bin/php/php5.6.10/conf/php.ini
+org.eclipse.php.debug.coreinstalledPHPLoadIniDefaults=false
+org.eclipse.php.debug.coreinstalledPHPLocations=/Applications/MAMP/bin/php/php5.6.10/bin/php
+org.eclipse.php.debug.coreinstalledPHPNames=PHPXDebug
+org.eclipse.php.debug.coreinstalledPHPUniqueIds=php-exe-4337d522-8098-4225-9c14-baeeac7625a0
+org.eclipse.php.debug.corephp_versions=null

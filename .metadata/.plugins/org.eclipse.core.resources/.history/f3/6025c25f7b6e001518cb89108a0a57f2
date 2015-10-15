@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Ejercicio examen 1</title>
+</head>
+<body>
+	<?php
+		$nombreApellidos = array("Nombre" => "J.Bean", "Apellidos" => "Spinette Tolondreras");
+		$callePuerta = array("Calle" => "Dr. Frankenstein", "Numero" => 8);
+		$dniSexo = array("DNI" => "42007069X", "Sexo" => "Masculino");
+		
+		echo("<p>Nombre y Apellidos</p><br>");
+		echo("<table border='1'>");
+		while(list($clave, $valor) = each($nombreApellidos)) {
+			echo("<tr>");
+			echo("<td>$clave</td>");
+			echo("<td>$valor</td>");
+		}
+		echo("</table>");
+		
+		echo("<p>Calle y Puerta</p><br>");
+		echo("<table border='1'>");
+		while(list($clave, $valor) = each($callePuerta)) {
+			echo("<tr>");
+			echo("<td>$clave</td>");
+			echo("<td>$valor</td>");
+		}
+		echo("</table>");
+		
+		echo("<p>DNI y Sexo</p><br>");
+		echo("<table border='1'>");
+		while(list($clave, $valor) = each($dniSexo)) {
+			echo("<tr>");
+			echo("<td>$clave</td>");
+			echo("<td>$valor</td>");
+		}
+		echo("</table>");
+	?>
+</body>
+</html>
+

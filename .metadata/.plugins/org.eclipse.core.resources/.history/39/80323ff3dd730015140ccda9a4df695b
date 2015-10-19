@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8" />
+	<title>Actividad 4.1 - Ejercicio 4</title>
+</head>
+<body>
+	<form action="ejercicio4.php" method="post">
+		Introduzca Tipo Moneda 0:<input type="text" name="moneda()"/><br />
+		Introduzca Tipo Moneda 1:<input type="text" name="moneda()"/><br />
+		Introduzca Tipo Moneda 2:<input type="text" name="moneda()"/><br />
+		Introduzca Tipo Cambio 0:<input type="text" name="cambio()"/><br />
+		Introduzca Tipo Cambio 1:<input type="text" name="cambio()"/><br />
+		Introduzca Tipo Cambio 2:<input type="text" name="cambio()"/><br />
+		<input type="submit" value="Enviar" /><br />
+	</form>
+	<?php
+	if(isset($_POST["cadena"])) {
+		
+	}
+	?>
+</body>
+</html>

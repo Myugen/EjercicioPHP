@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Validación Ejercicio 1</title>
+</head>
+<body>
+	<?php
+	if((isset($_POST["nombre"])) && (isset($_POST["dni"])))
+		if(isset($_POST["sueldo"]))
+	?>
+</body>
+</html>

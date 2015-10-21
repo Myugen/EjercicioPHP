@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+	<label for="textBoxNombre"><strong>(*)Nombre:</strong></label><input type="text" name="nombre" id="textBoxNombre" /><br>
+	<label for="textBoxNombre"><strong>(*)DNI:</strong></label><input type="text" name="dni" id="textBoxDNI" /><br>
+	<label for="textBoxNombre"><strong>(*)Sueldo:</strong></label><input type="text" name="sueldo" id="textSueldo" /><br>
+</body>
+</html>

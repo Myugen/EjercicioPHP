@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Ejercicio 2</title>
+</head>
+<body>
+	<form action="resultado_ejercicio2.php">
+	<label for="selectMascota">¿Qué mascota desea el/la Sr./Sra.?</label><br>
+	</form>
+</body>
+</html>

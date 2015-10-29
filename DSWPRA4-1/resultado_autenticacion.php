@@ -23,8 +23,17 @@ else {
 <div class="container">
 	<div class="jumbotron text-center">
 	<?php
+		/* Controlo que no se deje algún campo vacío en la autenticación,
+		 * en caso contrario muestro un mensaje personalizado.
+		 */
 		if(!empty($_POST["password"]) && !empty($_POST["user"])) {
 			$password = $_POST["password"];
+			
+			/*
+			 * Controlo mediante una expresión regular que la contraseña no sea menor de 8 
+			 * y que obligatoriamente contenga un carácter numérico y otro alfabético.
+			 * En caso de no ser así muestro un mensaje personalizado.
+			 */
 			if(preg_match("/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,}$/", $password)) {
 				echo "<p class='text-success'>Password válido</p><br>";
 				echo "El usuario y password introducido es correcto.<br>";

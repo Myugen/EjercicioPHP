@@ -4,6 +4,10 @@ require 'style/css_cookie.php';
 ?>
 <?php 
 //************************************ // subir el fichero germen estilos
+/*
+ * Si la variable choice de tipo GET existe, significa que hemos elegido, a continuación para no estar sobreescribiendo siempre en la cookie,
+ * comparo si la elección del tema es diferente a la que usamos, de ser así cambiamos el tema y sobreescribimos/creamos la cookie con el tema seleccionado. 
+ */
 if(isset($_GET["choice"])) {
 	$choice = $_GET["choice"];
 	if($styleCheese != $choice) {
@@ -16,7 +20,9 @@ if(isset($_GET["choice"])) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="style/<?php echo $styleCheese;?>/style.css" rel="stylesheet" type="text/css" />
+<!-- Al igual que en contact.php e index.php recogemos el nombre de la carpeta que contiene el 
+tema desde la variable $styleCheese contenida en la página css_cookie.php -->
+<link href="style/<?php echo $styleCheese;?>/style.css" rel="stylesheet" type="text/css" />  
 <title>CAMBIAMOS EL TEMA USANDO LAS COOKIES DE SESION</title>
 </head>
 <body>

@@ -1,9 +1,12 @@
 <?php
 session_start();
+//Si se aprieta el enlace 'Eliminar' creo una variable GET para dejar una marca de borrado, si esa marca existe, borro la cookie.
 if(isset($_GET["borrar"])) {
 	unset($_COOKIE["contador"]);
 	setcookie("contador", null, time() - 3600);
 }
+/*Si a la llamada de la página existe la cookie que contabiliza las visitas a la web, entonces aumento el contador y la almaceno
+en la cookie otra vez. Si no existe tal cookie, la creo con el contador iniciado a 1 (la primera visita)*/ 
 if(isset($_COOKIE["contador"])) {
 	$contador = $_COOKIE["contador"];
 	setcookie("contador", ++$contador, time() + (60*60*24*30));
@@ -42,10 +45,11 @@ else {
 	<div id="informacion" class="jumbotron text-center">
 	<h2>Contador de accesos</h2>
 	<?php
+		//Control para escribir un mensaje un poco más personalizado en caso de ser la primera vez que se accede a la página
 		if($contador == 1)
-			echo "Ha accedido a la página por primera vez.";
+			echo "<p>Ha accedido a la página por primera vez.</p>";
 		else 
-			echo "Ha accedido a la página<strong> $contador </strong>veces.";
+			echo "<p>Ha accedido a la página<strong> $contador </strong>veces.</p>";
 	?>
 	<br>
 	<a href="autenticacion.php">Actualizar</a>&nbsp | &nbsp <a href="autenticacion.php?borrar=1">Eliminar</a>

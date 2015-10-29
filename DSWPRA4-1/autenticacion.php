@@ -16,22 +16,30 @@ else {
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<link rel="stylesheet" href="style/resultado.css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Panel de autenticación</title>
 </head>
 <body>
-	<form action="resultado_autenticacion.php" method="post">
+	<div class="container">
+	<form action="resultado_autenticacion.php" method="post" role="form">
 	<fieldset>
-	<legend>Panel de autenticación</legend>
-	<strong>Usuario:</strong> <input type="text" name="user" id="textBoxUsuario" /><br>
-	<strong>Password:</strong> <input type="password" name="password" id="textBoxPassword" /><br>
-	<input type="submit" value="Iniciar sesión" />
+	<legend><h2>Panel de autenticación</h2></legend>
+	<label for="textBoxUsuario">Usuario:</label> 
+	<input type="text" name="user" id="textBoxUsuario" class="form-control"/><br>
+	<label for="textBoxPassword">Usuario:</label> 
+	<input type="password" name="password" id="textBoxPassword" class="form-control"/><br>
+	<button type="submit" class="btn btn-default">Iniciar sesión</button>
 	</fieldset>
 	</form>
+	<div class="alert alert-warning" role="alert">
 	<p>Para ingresar, insertar <strong>un usuario cualquiera</strong> y <strong>un password que cumpla</strong>:<br>
 	La clave tiene al menos 8 carácteres y al menos una cifra del 0-9 y una letra.</p>
-	<div id="informacion">
+	</div>
+	<div id="informacion" class="jumbotron text-center">
 	<h2>Contador de accesos</h2>
 	<?php
 		if($contador == 1)
@@ -41,6 +49,7 @@ else {
 	?>
 	<br>
 	<a href="autenticacion.php">Actualizar</a>&nbsp | &nbsp <a href="autenticacion.php?borrar=1">Eliminar</a>
+	</div>
 	</div>
 </body>
 </html>

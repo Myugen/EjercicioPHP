@@ -31,7 +31,7 @@ if(isset($_GET["choice"])) {
     <a href="theme.php?choice=pajarraco">pajarraco </a><br/>
 	  <br />
 	<a href="theme.php?choice=paisaje">paisaje </a></p>
-    <p>los químicos tratando de aclarar el fenómeno de la fotosíntesis, buscando nuevos fármacos y produciendo pesticidas y fertilizantes, y los especialistas en Ecología quienes desarrollan técnicas para apagar incendios no naturales no provocados por pirómanos, </p>
+    <p>Los químicos tratando de aclarar el fenómeno de la fotosíntesis, buscando nuevos fármacos y produciendo pesticidas y fertilizantes, y los especialistas en Ecología quienes desarrollan técnicas para apagar incendios no naturales no provocados por pirómanos, </p>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam  nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat   volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation  ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.  FINIQUITO.</p>
     <h3>TODOS LOS DERECHOS RESERVAOS...'CHANCLETAS S.A.'</h3>
   </div>

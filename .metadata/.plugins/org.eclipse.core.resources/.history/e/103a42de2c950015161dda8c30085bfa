@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8" />
+	<title>Crear Base de datos del foro</title>
+</head>
+<body>
+	<?php
+	// Archivo php para el "administrador" para crear la base de datos necesaria
+	// y las tablas, con los campos requeridos.
+	
+	// Datos generales para la aplicación web:
+	$servidor="localhost"; // "localhost"
+	$usuario_bd="root"; // Usuario Administrador de MySQL
+	$clave_bd="admin"; // Clave del Usuario Administrador de MySQL
+	$basedatos="foro";
+	$tabla1="usuario";
+	$tabla2="tema";
+	$tabla3="mensaje";
+	
+	$sql_crearbasedatos = "CREATE DATABASE $basedatos CHARACTER SET utf8 COLLATE utf8_spanish_ci";
+	
+	$sql_creartabla1 = "CREATE TABLE $tabla1(";
+	$sql_creartabla1.= "ID INT AUTO_INCREMENT KEY NOT NULL,
+			            usuario VARCHAR(15) PRIMARY KEY NOT NULL, 
+			            pass VARCHAR(15) NOT NULL, 
+			            tipo VARCHAR(15) NOT NULL);";
+	
+	$sql_insertarregistros1 = "INSERT INTO $tabla1 VALUES ";
+	$sql_insertarregistros1.= "(null, 'Admin','Admin51','administrador'),";
+	$sql_insertarregistros1.= "(null, 'usertest','Qwer123','usuario');";
+	
+	$sql_creartabla2 = "CREATE TABLE $tabla2(";
+	$sql_creartabla2.= "ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
+						usuarioID INT NOT NULL,
+						titulo TEXT NOT NULL,
+						fechahora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+						FOREIGN KEY(usuarioID) REFERENCES usuario(ID));";
+	
+	$sql_insertarregistros2 = "INSERT INTO $tabla2 VALUES ";
+	$sql_insertarregistros2.= "(null, 2,'Mi primer post', null);";
+	
+	$sql_creartabla3 = "CREATE TABLE $tabla3(";
+	$sql_creartabla3.= "ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
+						usuarioID INT NOT NULL,
+						temaID INT NOT NULL,
+						opinion TEXT NOT NULL,
+						fechahora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+						FOREIGN KEY(usuarioID) REFERENCES usuario(ID),
+						FOREIGN KEY(temaID) REFERENCES tema(ID));";
+	
+	$sql_insertarregistros3 = "INSERT INTO $tabla3 VALUES ";
+	$sql_insertarregistros3.= "(null, 2, 1, 'Es mi primrer post y estoy muy contento porque hoy comí rollitos de primavera.\nUn saludo.', null);";
+	
+	// Inicialmente intentaremos conectar con el servidor MySQL instalado en el servidor web.
+	$conexion = new mysqli($servidor,$usuario_bd,$clave_bd);
+	$conexion->query("SET NAMES 'utf8'");
+	if(!$conexion) {
+		echo "ERROR: Imposible establecer conexión con el servidor (puede que esté desactivado o que no se encuentre en el servidor $servidor).<br>\n";
+	}
+	else {
+	 	// Como pudo conectarse con el servidor, intentaremos crear la base de datos, y despu�s la seleccionaremos para poder trabajar sobre ella.
+	 	echo "Conexión realizada con el servidor.<br>\n";
+		
+		// CREAR LA BASE DE DATOS:
+		$resultado = $conexion->query($sql_crearbasedatos);
+		if(!$resultado) {
+			echo "ERROR: Imposible crear base de datos $basedatos (puede que ya exista o que no se tenga permiso para crearla).<br>\n";
+		}
+		else { 
+		 	echo "Base de datos $basedatos creada.<br>\n"; 
+		}
+		
+		// SELECCIONAR LA BASE DE DATOS:
+		$resultado=$conexion->select_db($basedatos); 
+		if(!$resultado) {
+			echo "ERROR: Imposible seleccionar la base de datos $basedatos (puede que no exista o que no se tenga permiso para usarla).<br>\n";
+		}
+		else {
+		 	// Como pudo seleccionarse la base de datos, entonces intentaremos crear las tablas dentro, junto con registros iniciales para pruebas.
+		 	echo "Base de datos $basedatos seleccionada.<br>\n";
+			// CREAR TABLA 1:
+			$resultado=$conexion->query($sql_creartabla1);
+			if (!$resultado) {
+				echo "ERROR: Imposible crear la tabla $tabla1 (puede que ya exista o que no se tenga permiso para crearla).<br>\n";
+			}
+			else {
+				echo "Tabla $tabla1 creada.<br>\n";
+			}
+			// INSERTAR REGISTROS EN TABLA 1:
+			$resultado=$conexion->query($sql_insertarregistros1);
+			if (!$resultado) {
+				echo "ERROR: Imposible insertar registros iniciales en tabla $tabla1 (puede que ya existan esos registros o que no se tengan los permisos).<br>\n";
+			}
+			else {
+				echo "Registros iniciales insertados satisfactoriamente en la Tabla $tabla1.<br>\n";
+			}
+			
+			// CREAR TABLA 2:
+			$resultado=$conexion->query($sql_creartabla2);
+			if (! $resultado) {
+				echo "ERROR: Imposible crear la tabla $tabla2 (puede que ya exista o que no se tenga permiso para crearla).<br>\n";
+			}
+			else
+			{
+				echo "Tabla $tabla2 creada.<br>\n";
+			}
+			// INSERTAR REGISTROS EN TABLA 2:
+			$resultado=mysqli_query($conexion,$sql_insertarregistros2);
+			if (! $resultado) {
+				echo "ERROR: Imposible insertar registros iniciales en tabla $tabla2 (puede que ya existan esos registros o que no se tengan los permisos).<br>\n";
+			}
+			else
+			{
+				echo "Registros iniciales insertados satisfactoriamente en la Tabla $tabla2.<br>\n";
+			}
+						
+		}
+		// Antes de terminar, debe cerrarse la conexión con el servidor (pues sigue abierta)).
+		echo "Cerrando la conexión con el servidor...<br>\n";
+		mysqli_close($conexion);
+	}
+	
+	echo "Fin del programa.<br>\n";
+?>
+</body>
+</html>
+

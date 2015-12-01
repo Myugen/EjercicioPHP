@@ -1,0 +1,72 @@
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <meta charset="UTF-8">
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="jsfile"></script>
+    <title>Inicio</title>
+</head>
+<body>
+    <div class="container">
+    	<div class="row">
+    	<nav class="navbar navbar-fixed-top navbar-inverse">
+    		<a class="navbar-brand" href="#">MiForo</a>
+  			<ul class="nav navbar-nav navbar-left">
+	    		<li class="nav-item active">
+	      			<a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+	    		</li>
+	    		<li class="nav-item">
+	      			<a class="nav-link" href="#">Features</a>
+	    		</li>
+    		</ul>
+    		<ul class="nav navbar-nav navbar-right">
+    			<li class="nav-item" style="padding-right: 15px">
+    				<p class="navbar-text">Bienvenido, <a class="nav-link">anónimo</a></p>
+    			</li>
+    		</ul>
+    	</nav>
+    	</div>
+    	<div class="row" style="padding-top: 20px">
+    		<div class="page-header">
+    			<h1>Bienvenido a MiForo</h1>
+    			<small>Para disfrutar al máximo de la página, por favor, identifíquese o dese de alta.</small>
+    		</div>
+    	</div>
+    	<div class="row">
+	    	<div class="jumbotron">
+	    	<div class="container">
+	    	<div class="col-md-6">
+	    		<div class="panel panel-primary">
+  					<div class="panel-heading">Inicie sesión</div>
+  					<div class="panel-body">
+    					Panel content
+  					</div>
+				</div>
+	    	</div>
+	    	<div class="col-md-6">
+		    	<div class="panel panel-success">
+	  				<div class="panel-heading"><b>O bien, dese de alta</b> <small>(si no dispone de cuenta)</small></div>
+	  				<div class="panel-body">
+	    				Panel content
+	  				</div>
+				</div>
+	    	</div>
+	    	</div>
+	    	</div>
+    	</div>
+    </div>
+</body>
+</html>

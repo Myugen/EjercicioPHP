@@ -1,6 +1,8 @@
 <?php
 session_start();
 $usuario = "anónimo";
+$tipo = "invitado";
+$id = 0;
 if(!isset($_SESSION["usuario"]) && !isset($_SESSION["tipo"])) {
 	if(!empty($_POST["userIn"]) && !empty($_POST["passwordIn"])) {
 		$camposRellenos = true;
@@ -14,18 +16,19 @@ if(!isset($_SESSION["usuario"]) && !isset($_SESSION["tipo"])) {
 		if(!$conexion)
 			die("<p>Error de conexión " . mysqli_connect_errno() . ": ". mysqli_connect_error() . "</p><br>");
 		else {
-			$peticion = "SELECT u.usuario as user, u.tipo as tipo
+			$peticion = "SELECT u.id as id, u.usuario as user, u.tipo as tipo
 						 FROM usuario as u
-						 WHERE u.usuario = '$user' AND u.pass = '$pass'";
+						 WHERE u.usuario = '" . utf8_decode($user) . "' AND u.pass = '$pass'";
 			$resultado = $conexion->query($peticion);
 			if($resultado) {
 				$fila = $resultado->fetch_array();
 				if($fila) {
-					echo "recojo las variables " . $fila["usuario"] ." y " . $fila["tipo"] . " <br>";
 					$autenticacion = true;
+					$_SESSION["id"] = $fila["id"];
 					$_SESSION["usuario"] = $user;
 					$_SESSION["tipo"] = $fila["tipo"];
 					$usuario = $_SESSION["usuario"];
+					$conexion->close();
 				}
 				else {
 					$autenticacion = false;
@@ -42,6 +45,7 @@ if(!isset($_SESSION["usuario"]) && !isset($_SESSION["tipo"])) {
 else {
 	$usuario = $_SESSION["usuario"];
 	$tipo = $_SESSION["tipo"];
+	$id = $_SESSION["id"];
 }
 ?>
 <!DOCTYPE html>
@@ -59,21 +63,21 @@ else {
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <title>Inicio</title>
+    <title>Autenticación de usuario - MiForo</title>
 </head>
 <body>
     <div class="container">
     	<div class="row">
     	<nav class="navbar navbar-fixed-top navbar-inverse">
-    		<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+    		<a class="navbar-brand" href="../index.php"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
     			MiForo
     		</a>
   			<ul class="nav navbar-nav navbar-left">
 	    		<li class="nav-item active">
-	      			<a class="nav-link" href="#">Inicio<span class="sr-only">(current)</span></a>
+	      			<a class="nav-link" href="../index.php">Inicio<span class="sr-only">(current)</span></a>
 	    		</li>
 	    		<li class="nav-item">
-	      			<a class="nav-link" href="#">Foro</a>
+	      			<a class="nav-link" href="../foro.php">Foro</a>
 	    		</li>
     		</ul>
     		<ul class="nav navbar-nav navbar-right">
@@ -87,8 +91,8 @@ else {
 								Bienvenido, $usuario<span class='caret'></span>
     						</a>
 							<ul class='dropdown-menu' aria-labelledby='dropdownMenu'>
-    							<li><a href='cambiar_pass.php'>Cambiar contraseña</a></li>
-    							<li><a href='cerrar_sesion.php'>Cerrar sesión</a></li>
+    							<li><a href='../administracion/cambiar_pass.php'>Cambiar contraseña</a></li>
+    							<li><a href='../administracion/cerrar_sesion.php'>Cerrar sesión</a></li>
   							</ul>
     					</li>";
     			}
@@ -98,8 +102,8 @@ else {
     	</div>
     	<div class="row" style="padding-top: 20px">
     		<div class="page-header">
-    			<h1>Bienvenido a MiForo</h1>
-    			<small>Para disfrutar al máximo de la página, por favor, identifíquese o dese de alta.</small>
+    			<h1>Proceso de registro de usuario</h1>
+    			<small>Ver volver siempre es una alegría</small>
     		</div>
     	</div>
     	<div class="row">
@@ -108,17 +112,17 @@ else {
 	    		<?php 
 	    		if(!$camposRellenos) {
 	    			echo "<div class='alert alert-warning' role='alert'>
-						  	<strong>¡Aviso!</strong> Asegúrese de no dejar campos vacíos. <a href='index.php' class='alert-link'>Volver al índice</a>.
+						  	<strong>¡Aviso!</strong> Asegúrese de no dejar campos vacíos. <a href='../index.php' class='alert-link'>Volver al índice</a>.
 						  </div>";
 	    		}
 	    		else if(!$autenticacion) {
 	    			echo "<div class='alert alert-danger' role='alert'>
-						  	<strong>¡Error!</strong> Combinación usuario/contraseña no válida. <a href='index.php' class='alert-link'>Volver al índice</a>.
+						  	<strong>¡Error!</strong> Combinación usuario/contraseña no válida. <a href='../index.php' class='alert-link'>Volver al índice</a>.
 						  </div>";
 	    		}
 	    		else {
 	    			echo "<div class='alert alert-success role='alert'>
-						  	<strong>¡Enhorabuena!</strong> Login correcto. <a href='index.php' class='alert-link'>Volver al índice</a>.
+						  	<strong>¡Enhorabuena!</strong> Login correcto. <a href='../index.php' class='alert-link'>Volver al índice</a>.
 						  </div>";
 	    		}
 	    		?>

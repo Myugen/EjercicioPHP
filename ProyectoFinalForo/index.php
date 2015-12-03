@@ -2,10 +2,13 @@
 session_start();
 if(!isset($_SESSION["usuario"]) && !isset($_SESSION["tipo"])) {
 	$usuario = "anónimo";
+	$id = 0;
+	$tipo = "invitado";
 }
 else {
 	$usuario = $_SESSION["usuario"];
 	$tipo = $_SESSION["tipo"];
+	$id = $_SESSION["id"];
 }
 ?>
 <!DOCTYPE html>
@@ -24,21 +27,21 @@ else {
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="jsfile"></script>
-    <title>Inicio</title>
+    <title>Inicio - MiForo</title>
 </head>
 <body>
     <div class="container">
     	<div class="row">
     	<nav class="navbar navbar-fixed-top navbar-inverse">
-    		<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+    		<a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
     			MiForo
     		</a>
   			<ul class="nav navbar-nav navbar-left">
 	    		<li class="nav-item active">
-	      			<a class="nav-link" href="#">Inicio<span class="sr-only">(current)</span></a>
+	      			<a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
 	    		</li>
 	    		<li class="nav-item">
-	      			<a class="nav-link" href="#">Foro</a>
+	      			<a class="nav-link" href="foro.php">Foro</a>
 	    		</li>
     		</ul>
     		<ul class="nav navbar-nav navbar-right">
@@ -52,10 +55,10 @@ else {
       							Bienvenido, $usuario<span class='caret'></span>
     						</a>
 							<ul class='dropdown-menu' aria-labelledby='dropdownMenu'>
-    							<li><a href='cambiar_pass.php'>Cambiar contraseña</a></li>
-    							<li><a href='cerrar_sesion.php'>Cerrar sesión</a></li>
+    							<li><a href='administracion/cambiar_pass.php'>Cambiar contraseña</a></li>
+    							<li><a href='administracion/cerrar_sesion.php'>Cerrar sesión</a></li>
   							</ul>
-    					</li>";
+    					  </li>";
     			}
     			?>
     		</ul>
@@ -70,11 +73,14 @@ else {
     	<div class="row">
 	    	<div class="jumbotron">
 	    	<div class="container">
+	    	<?php
+    		if($usuario == "anónimo") {
+    		?>
 	    	<div class="col-md-6">
 	    		<div class="panel panel-primary">
   					<div class="panel-heading">Inicie sesión</div>
   					<div class="panel-body">
-    					<form action="resultado_autenticacion.php" method="post" role="form">
+    					<form action="autenticacion/resultado_autenticacion.php" method="post" role="form">
 							<label for="textBoxUsuario">Usuario:</label> 
 							<input type="text" name="userIn" id="textBoxUsuario" class="form-control"/><br>
 							<label for="textBoxPassword">Contraseña:</label> 
@@ -91,13 +97,18 @@ else {
 		    	<div class="panel panel-success">
 	  				<div class="panel-heading"><b>O bien, cree su cuenta</b></div>
 	  				<div class="panel-body">
-	    				<form action="crear_cuenta.php" method="post" role="form">
+	    				<form action="autenticacion/crear_cuenta.php" method="post" role="form">
 							<label for="textBoxUsuario">Usuario:</label> 
 							<input type="text" name="userUp" id="textBoxUsuario" class="form-control"/><br>
+							<label for="textBoxPassword">Email:</label>
+							<input type="email" name="mailUp" id="textBoxPassword" class="form-control"/><br>
 							<label for="textBoxPassword">Contraseña:</label> 
-							<input type="password" name="passwordUp" id="textBoxPassword" class="form-control"/><br>
-							<label for="textBoxPassword">Confirme su contraseña:</label> 
-							<input type="password" name="confirmPasswordUp" id="textBoxPassword" class="form-control"/><br>
+							<input type="password" name="passwordUp" id="textBoxPassword" class="form-control" aria-describedby="helpBlock"/><br>
+							<span id="helpBlock" class="help-block">
+								<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+								El password debe de contener entre <strong>7</strong> y <strong>15 caracteres</strong>. <br>
+								Además, también debe de contener al menos <strong>una minúscula</strong>, <strong>una mayúscula</strong> y <strong>un dígito</strong>
+							</span><br>
 							<button type="submit" class="btn btn-success">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 								Crear cuenta
@@ -106,6 +117,20 @@ else {
 	  				</div>
 				</div>
 	    	</div>
+	    	<?php
+    		}
+    		else {
+	    	?>
+	    	<div class="col-md-12">
+	    		<h3>¿Has visto lo maravilloso que se ve todo con Bootstrap?</h3>
+	    		<span>
+	    			Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+	    			Voluptates vero facere nemo dolorum voluptatibus tempore eos a et esse nobis dolor amet veniam odio est voluptatem quasi totam quo illum.
+	    		</span>
+	    	</div>
+	    	<?php
+    		}
+	    	?>
 	    	</div>
 	    	</div>
     	</div>

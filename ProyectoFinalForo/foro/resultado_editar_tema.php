@@ -1,22 +1,22 @@
 <?php
 session_start();
-if(!isset($_POST["titulo"]) || !isset($_SESSION["id"]) || !isset($_GET["idTema"]))
+if(empty($_POST["titulo"]) || !isset($_SESSION["id"]) || !isset($_GET["idTema"]))
 	header("Location: ../foro.php");
 else {
+	require '../database/conexion.php';
 	$idTema = $_GET["idTema"];
 	$idUsuario = $_SESSION["id"];
 	$titulo = $_POST["titulo"];
-	$conectionDB = "localhost";
-	$userDB = "root";
-	$passDB = "admin";
-	$nameDB = "foro";
-	$conexion = new mysqli($conectionDB, $userDB, $passDB, $nameDB);
 	if(!$conexion) {
 		die("Error de conexión $conexion->connect_errno: $conexion->connect_error");
 	}
 	else {
-		$peticion = "UPDATE tema SET titulo='" . utf8_decode($titulo) . "', fechahora=CURRENT_TIMESTAMP WHERE ID=$idTema AND usuarioID = $idUsuario";
-		if($conexion->query($peticion)) {
+		$peticion = "UPDATE tema SET titulo=?, fechahora=CURRENT_TIMESTAMP WHERE ID=$idTema AND usuarioID = $idUsuario";
+		$stmt = $conexion->prepare($peticion);
+		if($stmt) {
+			$stmt->bind_param("s", utf8_decode($titulo));
+			$stmt->execute();
+			$stmt->close();
 			header("Location: ../foro.php");
 			$conexion->close();
 		}

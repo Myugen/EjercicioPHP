@@ -5,44 +5,55 @@ $tipo = "invitado";
 $id = 0;
 if(isset($_SESSION["usuario"]) && isset($_SESSION["tipo"])) {
 	if(!empty($_POST["passwordOld"]) && !empty($_POST["passwordNew"])) {
+		require '../database/conexion.php';
 		$camposRellenos = true;
 		$usuario = $_SESSION["usuario"];
 		$passViejo = $_POST["passwordOld"];
 		$passNuevo = $_POST["passwordNew"];
-		$conectionDB = "localhost";
-		$userDB = "root";
-		$passDB = "admin";
-		$nameDB = "foro";
-		$conexion = new mysqli($conectionDB, $userDB, $passDB, $nameDB);
+		$id = $_SESSION["id"];
 		if(!$conexion)
 			die("<p>Error de conexión " . mysqli_connect_errno() . ": ". mysqli_connect_error() . "</p><br>");
 		else {
-			$peticionUsuario = "SELECT u.pass as pass
+			$peticionUsuario = "SELECT u.pass
 						 FROM usuario as u
-						 WHERE u.usuario = '" . utf8_decode($user) . "' AND u.pass = '$passViejo'";
-			$resultadoAutenticacion = $conexion->query($peticionUsuario);
-			if($resultadoAutenticacion) {
-				$autenticacion = true;
-				if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z!@#$%]{7,15}$/", $passNuevo)) {
-					$passNuevoValido = true;
-					$peticionUpdate = "UPDATE usuario SET pass='$passNuevo' WHERE id=" . $_SESSION["id"];
-					$resultadoUpdate = $conexion->query($peticionUpdate);
-					if($resultadoUpdate) {
-						$update = true;
-						$para = $email;
-						$titulo = "MiForo - Confirmación de cambio de contraseña";
-						$mensaje = "Hola $usuario, le informamos del cambio correcto de contraseña.\n
-						Su nueva contraseña: $passNuevo \n
-						Un saludo de parte de la administración de MiForo.";
-						$cabeceras = "From: admin@miforo.com";
-						mail($para, $titulo, $mensaje, $cabeceras);
+						 WHERE u.usuario = ?";
+			$stmtAutenticacion = $conexion->prepare($peticionUsuario);
+			if($stmtAutenticacion) {
+				$stmtAutenticacion->bind_param("s", utf8_decode($usuario));
+				$stmtAutenticacion->execute();
+				$stmtAutenticacion->bind_result($hash);
+				$stmtAutenticacion->fetch();
+				$stmtAutenticacion->close();
+				if(password_verify($passViejo, $hash)) {
+					$autenticacion = true;
+					if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z!@#$%]{7,15}$/", $passNuevo)) {
+						$passNuevoValido = true;
+						$hashNuevo = password_hash($passNuevo, PASSWORD_DEFAULT);
+						$peticionUpdate = "UPDATE usuario SET pass= ? WHERE id= ?";
+						$stmtUpdate = $conexion->prepare($peticionUpdate);
+						if($stmtUpdate) {
+							$stmtUpdate->bind_param("si", $hashNuevo, $id);
+							$stmtUpdate->execute();
+							$stmtUpdate->close();
+							$update = true;
+							$para = $email;
+							$titulo = "MiForo - Confirmación de cambio de contraseña";
+							$mensaje = "Hola $usuario, le informamos del cambio correcto de contraseña.\n
+							Su nueva contraseña: $passNuevo \n
+							Un saludo de parte de la administración de MiForo.";
+							$cabeceras = "From: admin@miforo.com";
+							mail($para, $titulo, $mensaje, $cabeceras);
+						}
+						else {
+							$update = false;
+						}
 					}
 					else {
-						$update = false;
+						$passNuevoValido = false;
 					}
 				}
 				else {
-					$passNuevoValido = false;
+					$autenticacion = false;
 				}
 			}
 			else {

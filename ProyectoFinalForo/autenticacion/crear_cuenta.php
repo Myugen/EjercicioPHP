@@ -11,23 +11,23 @@ else {
 		$camposRellenos = true;
 		$user = $_POST["userUp"];
 		$pass = $_POST["passwordUp"];
+		$hash = password_hash($pass, PASSWORD_DEFAULT);
 		$email = $_POST["mailUp"];
 		$tipo = "usuario";
 		if(preg_match_all("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z!@#$%]{7,15}$/", $pass)) {
 			$passValido = true;
 			if(filter_var($email, FILTER_VALIDATE_EMAIL) != false) {
+				require '../database/conexion.php';
 				$emailValido = true;
-				$conectionDB = "localhost";
-				$userDB = "root";
-				$passDB = "admin";
-				$nameDB = "foro";
-				$conexion = new mysqli($conectionDB, $userDB, $passDB, $nameDB);
 				if(!$conexion)
 					die("<p>Error de conexión " . mysqli_connect_errno() . ": ". mysqli_connect_error() . "</p><br>");
 					else {
-						$peticion = "INSERT INTO usuario VALUES(null, '" . utf8_decode($user) . "', '$pass', '$tipo', '$email');";
-						$resultado = $conexion->query($peticion);
-						if($resultado) {
+						$peticion = "INSERT INTO usuario VALUES(null, ?, ?, '$tipo', ?);";
+						$stmt = $conexion->prepare($peticion);
+						if($stmt) {
+							$stmt->bind_param("sss", utf8_decode($user), $hash, $email);
+							$stmt->execute();
+							$stmt->close();
 							$_SESSION["id"] = $conexion->insert_id;
 							$creacion = true;
 							$_SESSION["usuario"] = $user;

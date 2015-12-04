@@ -11,11 +11,7 @@ else {
 	$id = $_SESSION["id"];
 }
 
-$conectionDB = "localhost";
-$userDB = "root";
-$passDB = "admin";
-$nameDB = "foro";
-$conexion = new mysqli($conectionDB, $userDB, $passDB, $nameDB);
+require 'database/conexion.php';
 if(!$conexion) {
 	die("Error de conexión $conexion->errno: $conexion->error");
 }
@@ -42,7 +38,7 @@ else {
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="jsfile"></script>
-    <title>Inicio - MiForo</title>
+    <title>Foro - MiForo</title>
 </head>
 <body>
     <div class="container">

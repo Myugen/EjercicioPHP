@@ -5,38 +5,38 @@ $tipo = "invitado";
 $id = 0;
 if(!isset($_SESSION["usuario"]) && !isset($_SESSION["tipo"])) {
 	if(!empty($_POST["userIn"]) && !empty($_POST["passwordIn"])) {
+		require '../database/conexion.php';
 		$camposRellenos = true;
 		$user = $_POST["userIn"];
 		$pass = $_POST["passwordIn"];
-		$conectionDB = "localhost";
-		$userDB = "root";
-		$passDB = "admin";
-		$nameDB = "foro";
-		$conexion = new mysqli($conectionDB, $userDB, $passDB, $nameDB);
 		if(!$conexion)
 			die("<p>Error de conexión " . mysqli_connect_errno() . ": ". mysqli_connect_error() . "</p><br>");
 		else {
-			$peticion = "SELECT u.id as id, u.usuario as user, u.tipo as tipo
+			$peticion = "SELECT u.id as id, u.pass as hash, u.tipo as tipo
 						 FROM usuario as u
-						 WHERE u.usuario = '" . utf8_decode($user) . "' AND u.pass = '$pass'";
-			$resultado = $conexion->query($peticion);
-			if($resultado) {
-				$fila = $resultado->fetch_array();
-				if($fila) {
+						 WHERE u.usuario = ?";
+			$stmt = $conexion->prepare($peticion);
+			if($stmt) {
+				$stmt->bind_param("s", utf8_decode($user));
+				$stmt->execute();
+				$stmt->bind_result($id, $hash, $tipo);
+				$stmt->fetch();
+				if(password_verify($pass, $hash)) {
 					$autenticacion = true;
-					$_SESSION["id"] = $fila["id"];
+					$_SESSION["id"] = $id;
 					$_SESSION["usuario"] = $user;
-					$_SESSION["tipo"] = $fila["tipo"];
+					$_SESSION["tipo"] = $tipo;
 					$usuario = $_SESSION["usuario"];
-					$conexion->close();
 				}
 				else {
 					$autenticacion = false;
 				}
+				$stmt->close();
 			}
 			else {
 				$autenticacion = false;
 			}
+			$conexion->close();
 		}
 	}
 	else
